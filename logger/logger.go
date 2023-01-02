@@ -26,7 +26,7 @@ const Warn = 4
 const Error = 5
 const Fatal = 6
 
-func (l *LogContent) Logger() {
+func Logger(l LogContent) {
 	now := time.Now()
 	timeCustom := now.Format("2006-01-02")
 
