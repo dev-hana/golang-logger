@@ -89,5 +89,6 @@ func Logger(l LogContent) {
 
 	multiWriter := io.MultiWriter(logFile, os.Stdout)
 	log.SetOutput(multiWriter)
-	bold.Println(message)
+	bold.Print(message)
+	fmt.Println()
 }
