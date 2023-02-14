@@ -6,6 +6,8 @@ import (
 	"log"
 	"os"
 	"time"
+
+	"github.com/fatih/color"
 )
 
 type LogContent struct {
@@ -33,6 +35,9 @@ func Logger(l LogContent) {
 	var level string
 	var message string
 
+	whilte := color.New(color.FgWhite)
+	bold := whilte.Add(color.BgGreen)
+
 	if l.LogType == 0 {
 		message = fmt.Sprintf("{project:%s, handler:%s, request:%s, time:%s}", l.Project, l.Handler, l.Message, l.Time)
 	} else if l.LogType == 1 {
@@ -53,10 +58,13 @@ func Logger(l LogContent) {
 		level = "[INFO] "
 	case 4:
 		level = "[WARN] "
+		bold = whilte.Add(color.BgHiYellow)
 	case 5:
 		level = "[ERROR] "
+		bold = whilte.Add(color.BgHiRed)
 	case 6:
 		level = "[FATL] "
+		bold = whilte.Add(color.BgHiRed)
 	}
 
 	file_name := "logs/" + timeCustom + ".log"
@@ -81,5 +89,5 @@ func Logger(l LogContent) {
 
 	multiWriter := io.MultiWriter(logFile, os.Stdout)
 	log.SetOutput(multiWriter)
-	log.Println(message)
+	bold.Println(message)
 }
