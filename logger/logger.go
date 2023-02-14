@@ -2,7 +2,6 @@ package logger
 
 import (
 	"fmt"
-	"io"
 	"log"
 	"os"
 	"time"
@@ -49,22 +48,22 @@ func Logger(l LogContent) {
 
 	// Request
 	case 0:
-		level = "[DUBUG] "
+		level = "[DUBUG]"
 	case 1:
-		level = "[DUBUG] "
+		level = "[DUBUG]"
 	case 2:
-		level = "[DUBUG] "
+		level = "[DUBUG]"
 	case 3:
-		level = "[INFO] "
+		level = "[INFO]"
 	case 4:
-		level = "[WARN] "
-		bold = whilte.Add(color.BgHiYellow)
+		level = "[WARN]"
+		bold = whilte.Add(color.BgYellow)
 	case 5:
-		level = "[ERROR] "
-		bold = whilte.Add(color.BgHiRed)
+		level = "[ERROR]"
+		bold = whilte.Add(color.BgRed)
 	case 6:
-		level = "[FATL] "
-		bold = whilte.Add(color.BgHiRed)
+		level = "[FATL]"
+		bold = whilte.Add(color.BgRed)
 	}
 
 	file_name := "logs/" + timeCustom + ".log"
@@ -85,10 +84,8 @@ func Logger(l LogContent) {
 	}
 
 	log.SetFlags(log.Ldate | log.Ltime)
-	log.SetPrefix(level)
+	log.SetPrefix(fmt.Sprintf("%s", bold.Sprint(level)))
 
-	multiWriter := io.MultiWriter(logFile, os.Stdout)
-	log.SetOutput(multiWriter)
-	bold.Print(message)
-	log.Println()
+	logFile.WriteString(fmt.Sprintf("%s %s\n", level, message))
+	log.Println(message)
 }
